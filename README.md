@@ -1,6 +1,6 @@
 # TheCyberLounge
 
-Hey! Welcome to the Cyber Lounge! where you can find a yummy meal and drink recipe to prepare right in the comfort of your own home!
+Hey! Welcome to the Cyber Lounge! Here you can find yummy meal and drink recipes to prepare right in the comfort of your own home!
 
 ## Installation
 
@@ -17,6 +17,7 @@ And then execute:
 Or install it yourself as:
 
     $ gem install the_cyber_lounge
+To run the program, type the following in your terminal: ./bin/server
 
 ## Usage
 

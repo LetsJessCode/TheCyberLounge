@@ -87,12 +87,12 @@ class Cli
    def print_cocktails#woot woot
         COCKTAILS.get_cocktails
             sleep 2
-        Drink.all.each.with_index(1) do |drinks_data, index|
+        Drink.all.each.with_index(1) do |drink, index|
             puts 
-            puts "#{index}. #{drinks_data.name}".magenta.bold
-            puts "Ingredients: #{drinks_data.ingredients}".bold
+            puts "#{index}. #{drink.name}".magenta.bold
+            puts "Ingredients: #{drink.ingredients}".bold
             puts ""
-            puts "#{drinks_data.instructions}".cyan
+            puts "#{drink.instructions}".cyan
             puts "_____________________________"   
       end 
     end 
