@@ -119,17 +119,16 @@ class Cli
             puts 
             puts "#{index}. #{drink.name}".magenta.bold
             end 
-        end 
-    end 
+        end  
 
         def print_drink(index)
-                drink = Drink.all[index]
-                puts  "#{drink.name}".magenta.bold
-                puts "_____________________________"         
-                puts "Ingredients: #{drink.ingredients}".bold
-                puts ""
-                puts "#{drink.instructions}".cyan
-                puts "_____________________________"         
-                puts ""            
+            drink = Drink.all[index]
+            puts  "#{drink.name}".magenta.bold
+            puts "_____________________________"         
+            puts "Ingredients: #{drink.ingredients}".bold
+            puts ""
+            puts "#{drink.instructions}".cyan
+            puts "_____________________________"         
+            puts ""            
         end 
     end   
