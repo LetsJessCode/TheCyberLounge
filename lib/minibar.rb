@@ -17,5 +17,9 @@ class Drink
 
   def self.all
     @@all
-  end  
+  end 
+
+  def self.clear_drinks
+    @@all.clear
+  end
 end 

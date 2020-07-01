@@ -28,51 +28,78 @@ class Cli
         
         if user_input.downcase == "food"
             puts "Prepping meals...".bold.yellow
-            sleep 2
+            sleep 1
             print_recipes
             main_menu
-        elsif 
-            user_input.downcase == "cocktail"
+        elsif user_input.downcase == "cocktail"
             puts "Grab a glass...".bold.magenta
-            sleep 2
+            sleep 1
             print_cocktails
-            puts ""
+            sleep 1
+            puts "Type a number of the drink you wish to select.".bold.magenta
             puts "To view more drink selections simply type 'next'!".bold.green
-            main_menu
-        elsif user_input.downcase == "menu"
-            sleep 2
-             main_menu
+          
+            user_input = gets.strip
+            if user_input.downcase == "next"
+                puts "Generating new drink menu!".bold.yellow
+                sleep 1
+                next_drinks
+            elsif user_input.to_i > 0 && user_input.to_i <= Drink.all.length
+                input_num = user_input.to_i          
+                index_of_drink = input_num - 1
+                print_drink(index_of_drink)
+                sleep 1
+                Drink.clear_drinks
+                main_menu
+            end
         elsif 
             user_input.downcase == "leave"
             good_bye
             exit
-        elsif user_input.downcase == "next"
-            sleep 1
-            puts "Happy Hour...starts now!".bold.magenta
-            print_cocktails
-            puts ""
-            puts "To view more drink selections simply type 'next'!".bold.green
-
-            main_menu
         else 
             invalid_input
-            main_menu
-        end 
-    end 
+            main_menu   
+       end 
+   end     
+    
  ################################### HELPER METHODS ################################
     def invalid_input
             puts "Uh oh! It seems you've entered an invalid option! Please try again.".bold.yellow
-    end     
+    end   
+
+    def next_drinks
+        Drink.clear_drinks
+        print_cocktails     
+        puts "Type a number of the drink you wish to select."
+        puts "To view more drink selections simply type 'next'!".bold.green
+        user_input = gets.strip
+        if user_input.downcase == "next"
+            next_drinks
+        elsif  user_input.to_i > 0 && user_input.to_i <= Drink.all.length
+            input_num = user_input.to_i          
+            index_of_drink = input_num - 1
+            print_drink(index_of_drink)
+            sleep 2
+            Drink.clear_drinks
+            main_menu 
+        else
+            Drink.clear_drinks
+            invalid_input
+            main_menu
+        end
+    end
 
     def print_recipes #woot woot
-        MEALS.get_recipes
-        puts  " __________________".bold.cyan
-        puts "|  ___   ___   ___  |".bold.magenta
-        puts "| |___  |___|   |   |".bold.cyan
-        puts "| |___  |   |   |   |".bold.magenta
-        puts  " -------------------".bold.cyan
+        if Recipe.all.length != 10
+            MEALS.get_recipes
+         
+            puts  " __________________".bold.cyan
+            puts "|  ___   ___   ___  |".bold.magenta
+            puts "| |___  |___|   |   |".bold.cyan
+            puts "| |___  |   |   |   |".bold.magenta
+            puts  " -------------------".bold.cyan
          sleep 2
-        Recipe.all.each.with_index(1) do |recipes_data, index|
+         Recipe.all.each.with_index(1) do |recipes_data, index|
           puts ""
           puts "#{index}. #{recipes_data.title}".magenta.bold
           puts ""
@@ -81,19 +108,28 @@ class Cli
           puts "Link to recipe: #{recipes_data.href}.".light_blue
           puts "______________________________"
           
-        end
-    end 
+            end
+        end 
+    end
 
    def print_cocktails#woot woot
-        COCKTAILS.get_cocktails
+         COCKTAILS.get_cocktails
             sleep 2
         Drink.all.each.with_index(1) do |drink, index|
             puts 
             puts "#{index}. #{drink.name}".magenta.bold
-            puts "Ingredients: #{drink.ingredients}".bold
-            puts ""
-            puts "#{drink.instructions}".cyan
-            puts "_____________________________"   
-      end 
+            end 
+        end 
     end 
-end
+
+        def print_drink(index)
+                drink = Drink.all[index]
+                puts  "#{drink.name}".magenta.bold
+                puts "_____________________________"         
+                puts "Ingredients: #{drink.ingredients}".bold
+                puts ""
+                puts "#{drink.instructions}".cyan
+                puts "_____________________________"         
+                puts ""            
+        end 
+    end   
