@@ -25,7 +25,7 @@ class Cli
         puts ""
         puts "Enter 'Food' or 'Cocktail'".bold
         user_input = gets.strip
-        
+       
         if user_input.downcase == "food"
             puts "Prepping meals...".bold.yellow
             sleep 1
@@ -38,8 +38,23 @@ class Cli
             sleep 1
             puts "Type a number of the drink you wish to select.".bold.magenta
             puts "To view more drink selections simply type 'next'!".bold.green
-          
             user_input = gets.strip
+            display_drink_options(user_input)
+        elsif 
+            user_input.downcase == "leave"
+            good_bye
+            exit
+        else 
+            invalid_input
+            main_menu   
+        end 
+    end
+     
+    
+ ################################### HELPER METHODS ################################
+
+    def display_drink_options(user_input)
+        
             if user_input.downcase == "next"
                 puts "Generating new drink menu!".bold.yellow
                 sleep 1
@@ -51,18 +66,14 @@ class Cli
                 sleep 1
                 Drink.clear_drinks
                 main_menu
-            end
-        elsif 
-            user_input.downcase == "leave"
-            good_bye
-            exit
-        else 
-            invalid_input
-            main_menu   
-       end 
-   end     
-    
- ################################### HELPER METHODS ################################
+            else 
+                invalid_input
+                sleep 1
+                user_input = gets.strip
+                display_drink_options(user_input)
+            end 
+        end
+
     def invalid_input
             puts "Uh oh! It seems you've entered an invalid option! Please try again.".bold.yellow
     end   
@@ -121,14 +132,14 @@ class Cli
             end 
         end  
 
-        def print_drink(index)
-            drink = Drink.all[index]
-            puts  "#{drink.name}".magenta.bold
-            puts "_____________________________"         
-            puts "Ingredients: #{drink.ingredients}".bold
-            puts ""
-            puts "#{drink.instructions}".cyan
-            puts "_____________________________"         
-            puts ""            
-        end 
-    end   
+    def print_drink(index)
+        drink = Drink.all[index]
+        puts  "#{drink.name}".magenta.bold
+        puts "_____________________________"         
+        puts "Ingredients: #{drink.ingredients}".bold
+        puts ""
+        puts "#{drink.instructions}".cyan
+        puts "_____________________________"         
+        puts ""   
+    end
+end   
