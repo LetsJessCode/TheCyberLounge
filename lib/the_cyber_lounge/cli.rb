@@ -19,7 +19,7 @@ class Cli
         puts "------------------------"
     end
     
-    def main_menu
+    def main_menu #woot woot
         puts "Would you like to view the Food Menu or the Cocktail Menu?"
         puts "To exit the Cyber Lounge, you may type 'leave'."
         puts ""
@@ -34,76 +34,92 @@ class Cli
         elsif user_input.downcase == "cocktail"
             puts "Grab a glass...".bold.magenta
             sleep 1
-            print_cocktails
-            sleep 1
-            puts "Type a number of the drink you wish to select.".bold.magenta
-            puts "To view more drink selections simply type 'next'!".bold.green
-            user_input = gets.strip
-            display_drink_options(user_input)
-        elsif 
-            user_input.downcase == "leave"
-            good_bye
-            exit
-        else 
-            invalid_input
-            main_menu   
+                print_cocktails
+                sleep 1
+                puts "Type the number of your drink selection".bold.yellow
+                puts "Type 'Next' for more drinks".bold.green
+                puts "Type 'Menu' to view Main Menu".bold.blue
+                user_input = gets.strip
+                display_drink_options(user_input) 
+            elsif user_input.downcase == "menu"
+                sleep 1
+                main_menu
+            elsif 
+                user_input.downcase == "leave"
+                good_bye
+                exit
+            else 
+                invalid_input
+                main_menu     
         end 
     end
-     
-    
  ################################### HELPER METHODS ################################
-
-    def display_drink_options(user_input)
-        
+    def display_drink_options(user_input) #woot woot
             if user_input.downcase == "next"
                 puts "Generating new drink menu!".bold.yellow
                 sleep 1
                 next_drinks
+            elsif user_input.downcase == "menu"
+                sleep 1
+                main_menu
             elsif user_input.to_i > 0 && user_input.to_i <= Drink.all.length
                 input_num = user_input.to_i          
                 index_of_drink = input_num - 1
                 print_drink(index_of_drink)
                 sleep 1
-                Drink.clear_drinks
-                main_menu
+                puts "To select another drink enter another number".bold.yellow
+                puts "Type 'Next' for more drink selections".bold.green
+                puts "Type 'Menu' to view Main Menu".bold.blue
+                user_input = gets.strip
+                display_drink_options(user_input)
             else 
                 invalid_input
                 sleep 1
+                puts "Type the number of your drink selection".bold.yellow
+                puts "Type 'Menu' to view Main Menu".bold.blue
                 user_input = gets.strip
                 display_drink_options(user_input)
             end 
         end
 
-    def invalid_input
+    def invalid_input #woot woot
             puts "Uh oh! It seems you've entered an invalid option! Please try again.".bold.yellow
     end   
 
-    def next_drinks
+    def next_drinks #woot woot
         Drink.clear_drinks
         print_cocktails     
-        puts "Type a number of the drink you wish to select."
-        puts "To view more drink selections simply type 'next'!".bold.green
+        puts "Type the number of your drink selection".bold.yellow
+        puts  "Type 'Next' for more drink selections".bold.green
+        puts "Type 'Menu' to view Main Menu".bold.blue
         user_input = gets.strip
         if user_input.downcase == "next"
             next_drinks
+        elsif user_input.downcase == "menu"
+            sleep 1
+            main_menu
         elsif  user_input.to_i > 0 && user_input.to_i <= Drink.all.length
             input_num = user_input.to_i          
             index_of_drink = input_num - 1
             print_drink(index_of_drink)
-            sleep 2
-            Drink.clear_drinks
-            main_menu 
+            sleep 1
+            puts "To select another drink enter another number".bold.yellow
+            puts "Type 'Next' for more drink selections".bold.green
+            puts "Type 'Menu' to view Main Menu".bold.blue
+            user_input = gets.strip
+            display_drink_options(user_input)
         else
-            Drink.clear_drinks
             invalid_input
-            main_menu
+            sleep 1
+            puts "Please enter the number of the drink you wish to select.".bold.magenta 
+            user_input = gets.strip
+            display_drink_options(user_input)
         end
     end
 
     def print_recipes #woot woot
         if Recipe.all.length != 10
             MEALS.get_recipes
-         
             puts  " __________________".bold.cyan
             puts "|  ___   ___   ___  |".bold.magenta
             puts "| |___  |___|   |   |".bold.cyan
@@ -132,7 +148,7 @@ class Cli
             end 
         end  
 
-    def print_drink(index)
+    def print_drink(index) #woot woot
         drink = Drink.all[index]
         puts  "#{drink.name}".magenta.bold
         puts "_____________________________"         
